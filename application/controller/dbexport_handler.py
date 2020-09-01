@@ -3,14 +3,22 @@ from typing import Dict
 from application.model import insert_devices_info
 
 def on_received_message(message: bytearray) -> bool:
+    ''' Callback function to process the received message:
+            Traducing, Checking, Acting
+        :parram - message: raw message in bytearray
+        :return - boolean with success/failure of all processes
+    '''
     
     # Traducing message
     traduced_message = traducing_message(message)
 
     # Checking message
-    check = checking_message(traduced_message)
+    checker = checking_message(traduced_message)
 
     # Acting
+    confirm = registering_message(traduced_message, checker)
+
+    return confirm
 
 
 def traducing_message(message: bytearray) -> Dict:
@@ -33,5 +41,21 @@ def checking_message(traduced_message: Dict) -> bool:
     
     if traduced_message["TYPE"] == 'LOC':
         return True
+    
+    return False
+
+
+def registering_message(message: Dict, checker: bool) -> bool:
+    ''' Registering message in DB
+        :parram - message: Dictionary with the message
+                - checker: Boolean with the confirmation 
+                            of the message
+        :return - boolean with the success/faluir of the message
+    '''
+    
+    if checker:
+        # If Message is checked
+        inserting = insert_devices_info(message)
+        return inserting
     
     return False
