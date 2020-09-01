@@ -1,3 +1,3 @@
-from .tbl_messages import create_table_messages
+from .tbl_devices_info import create_table_devices_info
 from .tbl_users import create_table_users
 from .tbl_users_devices import create_table_users_devices
