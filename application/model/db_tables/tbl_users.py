@@ -7,7 +7,7 @@ def create_table_users():
 
     c.execute("""CREATE TABLE users (
                 user_id INTEGER PRIMARY KEY AUTOINCREMENT,
-                username TEXT NOT NULL,
+                username TEXT NOT NULL UNIQUE,
                 password TEXT NOT NULL
             )""")
 
